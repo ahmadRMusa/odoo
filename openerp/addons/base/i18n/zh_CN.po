@@ -33,7 +33,7 @@
 # Xu Lei <xulei8@qq.com>, 2015
 # Zamba Lee <zambalee@gmail.com>, 2016
 # zhangpeiqing <zpq001@live.com>, 2015
-# 卓忆科技 <zhanghao@jointd.com>, 2016
+# zhanghao <zhanghao@jointd.com>, 2016
 # 朱仁杰 <johnson19960308@gmail.com>, 2016
 # 榴莲 <nocoolyoyo@bengentea.top>, 2016
 # liAnGjiA <liangjia@qq.com>, 2015
