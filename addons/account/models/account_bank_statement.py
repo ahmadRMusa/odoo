@@ -634,7 +634,7 @@ class AccountBankStatementLine(models.Model):
             select_clause, from_clause, where_clause = self._get_common_sql_query(overlook_partner=True, excluded_ids=excluded_ids, split=True)
             sql_query = select_clause + add_to_select + from_clause + add_to_from + where_clause
             sql_query += " AND (aml.ref= %(ref)s or m.name = %(ref)s) \
-                    ORDER BY temp_field_order, date_maturity asc, aml.id asc"
+                    ORDER BY temp_field_order, aml.id asc"
             self.env.cr.execute(sql_query, params)
             results = self.env.cr.fetchone()
             if results:
