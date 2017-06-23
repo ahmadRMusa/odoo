@@ -1486,8 +1486,8 @@ class AccountPartialReconcile(models.Model):
             origin_move = exchange_rate_entries.filtered(lambda x: x.rate_diff_partial_rec_id == rev_move.rate_diff_partial_rec_id)
             for acm_line in rev_move.line_ids:
                 if acm_line.account_id.reconcile:
-                    for or_move in origin_move:
-                        for origin_line in or_move.line_ids:
+                    for o_move in origin_move:
+                        for origin_line in o_move.line_ids:
                             if origin_line.account_id == acm_line.account_id and origin_line.debit == acm_line.credit and origin_line.credit == acm_line.debit:
                                 to_unlink |= origin_line.matched_debit_ids | origin_line.matched_credit_ids
                                 to_rec = origin_line + acm_line
