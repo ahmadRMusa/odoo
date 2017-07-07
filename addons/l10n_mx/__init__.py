@@ -1,2 +1,5 @@
-# -*- encoding: utf-8 -*-
-# Part of Odoo. See LICENSE file for full copyright and licensing details.
+# coding: utf-8
+# Copyright 2016 Vauxoo (https://www.vauxoo.com) <info@vauxoo.com>
+# License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
+
+from . import models

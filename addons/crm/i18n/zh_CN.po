@@ -13,7 +13,7 @@
 # Martin Trigaux, 2015
 # Rona Lin <ssauapw@qq.com>, 2015
 # xiaobin wu <bd5dml@gmail.com>, 2015
-# 卓忆科技 <zhanghao@jointd.com>, 2015-2016
+# zhanghao <zhanghao@jointd.com>, 2015-2016
 # liAnGjiA <liangjia@qq.com>, 2015
 msgid ""
 msgstr ""

@@ -634,7 +634,7 @@ class AccountBankStatementLine(models.Model):
             select_clause, from_clause, where_clause = self._get_common_sql_query(overlook_partner=True, excluded_ids=excluded_ids, split=True)
             sql_query = select_clause + add_to_select + from_clause + add_to_from + where_clause
             sql_query += " AND (aml.ref= %(ref)s or m.name = %(ref)s) \
-                    ORDER BY temp_field_order, date_maturity asc, aml.id asc"
+                    ORDER BY temp_field_order, aml.id asc"
             self.env.cr.execute(sql_query, params)
             results = self.env.cr.fetchone()
             if results:
@@ -891,6 +891,10 @@ class AccountBankStatementLine(models.Model):
             # Create the move
             self.sequence = self.statement_id.line_ids.ids.index(self.id) + 1
             move_name = (self.statement_id.name or self.name) + "/" + str(self.sequence)
+            # Ensure no duplicate is created
+            if self.env['account.move'].search([('name', '=', move_name)]):
+                count = self.env['account.move'].search_count([('name', '=like', move_name + '/%')])
+                move_name = u'{}/{}'.format(move_name, count + 1)
             move_vals = self._prepare_reconciliation_move(move_name)
             move = self.env['account.move'].create(move_vals)
             counterpart_moves = (counterpart_moves | move)

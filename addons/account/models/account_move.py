@@ -1243,9 +1243,8 @@ class AccountMoveLine(models.Model):
         """ Create analytic items upon validation of an account.move.line having an analytic account. This
             method first remove any existing analytic item related to the line before creating any new one.
         """
+        self.mapped('analytic_line_ids').unlink()
         for obj_line in self:
-            if obj_line.analytic_line_ids:
-                obj_line.analytic_line_ids.unlink()
             if obj_line.analytic_account_id:
                 vals_line = obj_line._prepare_analytic_line()[0]
                 self.env['account.analytic.line'].create(vals_line)
@@ -1487,11 +1486,12 @@ class AccountPartialReconcile(models.Model):
             origin_move = exchange_rate_entries.filtered(lambda x: x.rate_diff_partial_rec_id == rev_move.rate_diff_partial_rec_id)
             for acm_line in rev_move.line_ids:
                 if acm_line.account_id.reconcile:
-                    for origin_line in origin_move.line_ids:
-                        if origin_line.account_id == acm_line.account_id and origin_line.debit == acm_line.credit and origin_line.credit == acm_line.debit:
-                            to_unlink |= origin_line.matched_debit_ids | origin_line.matched_credit_ids
-                            to_rec = origin_line + acm_line
-                            pairs_to_rec.append(to_rec)
+                    for o_move in origin_move:
+                        for origin_line in o_move.line_ids:
+                            if origin_line.account_id == acm_line.account_id and origin_line.debit == acm_line.credit and origin_line.credit == acm_line.debit:
+                                to_unlink |= origin_line.matched_debit_ids | origin_line.matched_credit_ids
+                                to_rec = origin_line + acm_line
+                                pairs_to_rec.append(to_rec)
         #make sure that the exchange_rate_entries aren't linked to any partial reconciliation anymore
         exchange_rate_entries.write({'rate_diff_partial_rec_id': False})
         # the call to super() had to be delayed in order to mark the move lines to reconcile together (to use 'rate_diff_partial_rec_id')
