@@ -279,7 +279,7 @@ class Holidays(models.Model):
 
     def _get_number_of_days(self, date_from, date_to, employee_id):
         """ Returns a float equals to the timedelta between two dates given as string."""
-        from_dt = fields.Datetime.from_string(date_from)
+        from_dt = fields.Datetime.from_string(date_from) - timedelta(days=1)
         to_dt = fields.Datetime.from_string(date_to)
 
         if employee_id:
